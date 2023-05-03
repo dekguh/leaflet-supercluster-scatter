@@ -40,7 +40,7 @@ function App() {
             <div style={{
               width: '20px',
               height: '20px',
-              backgroundColor: '#E1A129',
+              backgroundColor: '#724603B2',
               borderRadius: '50%'
             }}></div>
           ),
@@ -57,7 +57,7 @@ function App() {
             <div style={{
               width: `${calculateSize}px`,
               height: `${calculateSize}px`,
-              backgroundColor: '#27D862',
+              backgroundColor: '#EF6C00CC',
               borderRadius: '50%'
             }}></div>
           ),
