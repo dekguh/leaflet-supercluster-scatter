@@ -24,8 +24,8 @@ const updateMapBoundsAndZoom = (mapContext, setBounds, setZoom) => {
 }
 
 function App() {
-  const geojsonRef = React.useRef({})
-  const superclusterRef = React.useRef({})
+  const geojsonRef = React.useRef(null)
+  const superclusterRef = React.useRef(null)
 
   const [mapContext, setMapContext] = React.useState(null)
   const [mapBounds, setMapBounds] = React.useState(null)
@@ -86,6 +86,15 @@ function App() {
                     animationDelay: '1.6s',
                   }}
                 ></div>
+
+                <div
+                  className='circle'
+                  style={{
+                    width: `${calculateSize}px`,
+                    height: `${calculateSize}px`,
+                    animationDelay: '2.4s',
+                  }}
+                ></div>
               </div>
             </div>
           ),
@@ -96,22 +105,15 @@ function App() {
   }
 
   const updateCluster = () => {
-    let pointListFiltered = {}
-    const listUniqueDevices = [...new Set(dataEvidences.map(item => item.device))]
-
     // CREATE GEOJSON & ADD TO MAP
-    if(Object.keys(geojsonRef.current).length === 0) {
-      listUniqueDevices.forEach(item => {
-        geojsonRef.current[item] = L.geoJSON(null, {
-          pointToLayer: createClusterIcon
-        }).addTo(mapContext)
-      })
+    if(!geojsonRef.current) {
+      geojsonRef.current = L.geoJSON(null, {
+        pointToLayer: createClusterIcon
+      }).addTo(mapContext)
     }
 
     // CLEAR PREV LAYERS
-    listUniqueDevices.forEach(item => {
-      geojsonRef.current[item]?.clearLayers()
-    })
+    geojsonRef.current?.clearLayers()
 
     // RESTRUCTURE TO GEOJSON
     const pointList = dataEvidences.map(item => ({
@@ -129,26 +131,22 @@ function App() {
       markerData: item,
     }))
 
-    listUniqueDevices.forEach(deviceName => {
-      // FILTERING EVIDENCES BY DEVICE
-      pointListFiltered[deviceName] = pointList.filter(item => item.markerData.device === deviceName)
-
-      // CREATE INSTANCE SUPERCLUSTER
-      superclusterRef.current[deviceName] = new Supercluster({
-        radius: 0.4,
-        extent: 24,
-        maxZoom: 20,
-      })
-
-      // ADD POINT
-      superclusterRef.current[deviceName].load(pointListFiltered[deviceName])
-
-      // GET MARKERS INSIDE BOUNDS (ENTIRE SCREEN)
-      const newClusterList = superclusterRef.current[deviceName].getClusters(mapBounds, mapZoom)
-
-      // ADD DATA CLUSTER LIST TO GEOJSON
-      geojsonRef.current[deviceName].addData(newClusterList)
+    // CREATE INSTANCE SUPERCLUSTER
+    superclusterRef.current = new Supercluster({
+      radius: 1000,
+      extent: 128,
+      maxZoom: 20,
+      minZoom: 20,
     })
+
+    // ADD POINT
+    superclusterRef.current.load(pointList)
+
+    // GET MARKERS INSIDE BOUNDS (ENTIRE SCREEN)
+    const newClusterList = superclusterRef.current.getClusters(mapBounds, mapZoom)
+
+    // ADD DATA CLUSTER LIST TO GEOJSON
+    geojsonRef.current.addData(newClusterList)
   }
 
   // UPDATE ZOOM & BOUNDS

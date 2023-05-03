@@ -47,5 +47,12 @@ export const dataEvidences = [
     title: 'macet panjang',
     category: 'kemacetan',
     coordinat: [-8.775119, 115.205388]
+  },
+  {
+    id: 7,
+    device: 'omang',
+    title: 'macet panjang',
+    category: 'kemacetan',
+    coordinat: [-8.796044, 115.218148]
   }
 ]
