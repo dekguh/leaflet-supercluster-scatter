@@ -60,32 +60,33 @@ function App() {
               height: `${calculateSize}px`,
               backgroundColor: '#EF6C00CC',
               borderRadius: '50%',
-              position: 'relative',
             }}>
-              <div
-                className='circle'
-                style={{
-                  width: `${calculateSize}px`,
-                  height: `${calculateSize}px`,
-                  animationDelay: '0s',
-                }}
-              ></div>
-              <div
-                className='circle'
-                style={{
-                  width: `${calculateSize}px`,
-                  height: `${calculateSize}px`,
-                  animationDelay: '1s',
-                }}
-              ></div>
-              <div
-                className='circle'
-                style={{
-                  width: `${calculateSize}px`,
-                  height: `${calculateSize}px`,
-                  animationDelay: '2s',
-                }}
-              ></div>
+              <div style={{ position: 'relative' }}>
+                <div
+                  className='circle'
+                  style={{
+                    width: `${calculateSize}px`,
+                    height: `${calculateSize}px`,
+                    animationDelay: '0s',
+                  }}
+                ></div>
+                <div
+                  className='circle'
+                  style={{
+                    width: `${calculateSize}px`,
+                    height: `${calculateSize}px`,
+                    animationDelay: '0.8s',
+                  }}
+                ></div>
+                <div
+                  className='circle'
+                  style={{
+                    width: `${calculateSize}px`,
+                    height: `${calculateSize}px`,
+                    animationDelay: '1.6s',
+                  }}
+                ></div>
+              </div>
             </div>
           ),
           iconSize: [calculateSize, calculateSize]
