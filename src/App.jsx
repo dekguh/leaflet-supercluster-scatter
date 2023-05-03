@@ -6,6 +6,7 @@ import L from 'leaflet'
 import Supercluster from 'supercluster'
 import { dataEvidences } from './constants'
 import * as ReactDOMServer from 'react-dom/server'
+import './App.css'
 
 const updateMapBoundsAndZoom = (mapContext, setBounds, setZoom) => {
   if (mapContext) {
@@ -58,8 +59,34 @@ function App() {
               width: `${calculateSize}px`,
               height: `${calculateSize}px`,
               backgroundColor: '#EF6C00CC',
-              borderRadius: '50%'
-            }}></div>
+              borderRadius: '50%',
+              position: 'relative',
+            }}>
+              <div
+                className='circle'
+                style={{
+                  width: `${calculateSize}px`,
+                  height: `${calculateSize}px`,
+                  animationDelay: '0s',
+                }}
+              ></div>
+              <div
+                className='circle'
+                style={{
+                  width: `${calculateSize}px`,
+                  height: `${calculateSize}px`,
+                  animationDelay: '1s',
+                }}
+              ></div>
+              <div
+                className='circle'
+                style={{
+                  width: `${calculateSize}px`,
+                  height: `${calculateSize}px`,
+                  animationDelay: '2s',
+                }}
+              ></div>
+            </div>
           ),
           iconSize: [calculateSize, calculateSize]
         })
